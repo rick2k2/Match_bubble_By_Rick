@@ -41,6 +41,7 @@ function settimer(){
             hitvalue.innerHTML = 0;
             bottompanel.append(tryagain);
             tryagain.addEventListener("click", () => {
+                reload_page();
                 reset();
                 // Reset the score value to 0
                 scorevalue.innerHTML = 0; 
@@ -53,6 +54,10 @@ function settimer(){
         }
     },1000);
 
+}
+
+function reload_page(){
+    location.reload();
 }
 
 function setScore(){
@@ -94,8 +99,8 @@ startbtn.addEventListener("click",(e)=>{
 
 // main game logic:
 function bubbleClickHandler(e) {
-    if (!document.querySelector("#tryagain") || !document.querySelector("#start")){
     let value = e.target.textContent;
+    if ((!document.querySelector("#tryagain")) || (!document.querySelector("#start"))){
     console.log(value);
     let clickBubble = Number(value);
     if (clickBubble === hitNumber) {
