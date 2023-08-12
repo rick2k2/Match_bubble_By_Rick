@@ -6,14 +6,14 @@ const startbtn = document.querySelector("#start");
 const timervalue = document.querySelector("#timer_value");
 
 
-let time = 60;
+let time = 0;
 let Score = 0;
 let hitNumber = 0;
 scorevalue.innerHTML = Score;
 
 // Set initial hit and timer values to 0
 hitvalue.innerHTML = hitNumber;
-timervalue.innerHTML = `${0}s`;
+timervalue.innerHTML = `${time}s`;
 scorevalue.innerHTML = Score;
 
 
@@ -40,6 +40,16 @@ function settimer(){
             scorevalue.innerHTML = 0;
             hitvalue.innerHTML = 0;
             bottompanel.append(tryagain);
+            tryagain.addEventListener("click", () => {
+                reset();
+                // Reset the score value to 0
+                scorevalue.innerHTML = 0; 
+                getBubbles();
+                // Remove the previous click event listener
+                bottompanel.removeEventListener("click", bubbleClickHandler); 
+                // Re-add the click event listener
+                bottompanel.addEventListener("click", bubbleClickHandler); 
+            });
         }
     },1000);
 
@@ -65,7 +75,7 @@ function getBubbles(){
 
 function reset() {
     hitNumber = 0;
-    time = 60;
+    time = 3;
     setHit();
     settimer();
     scorevalue.innerHTML = 0;
@@ -83,18 +93,19 @@ startbtn.addEventListener("click",(e)=>{
 
 
 // main game logic:
-bottompanel.addEventListener("click",(e)=>{
-    let clickBuble = Number(e.target.textContent);
-    if(clickBuble === hitNumber){
+function bubbleClickHandler(e) {
+    if (!document.querySelector("#tryagain") || !document.querySelector("#start")){
+    let value = e.target.textContent;
+    console.log(value);
+    let clickBubble = Number(value);
+    if (clickBubble === hitNumber) {
         setScore();
         message.innerHTML = "Very Good Correct Bubble continue!";
         message.style.background = "green";
         getBubbles();
         setHit();
-    }
-    else{
-        // Check if score is greater than or equal to 10
-        if (Score >= 10) {  
+    } else {
+        if (Score >= 10) {
             Score -= 10;
             scorevalue.innerHTML = Score;
         }
@@ -103,7 +114,10 @@ bottompanel.addEventListener("click",(e)=>{
         getBubbles();
         setHit();
     }
-})
+}
+}
+
+bottompanel.addEventListener("click",bubbleClickHandler);
 
 
 
