@@ -75,7 +75,7 @@ function getBubbles(){
 
 function reset() {
     hitNumber = 0;
-    time = 3;
+    time = 60;
     setHit();
     settimer();
     scorevalue.innerHTML = 0;
